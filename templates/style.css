@@ -1,0 +1,103 @@
+/* Background Styling */
+body {
+    background-image: url('static/background.jpeg'); /* Path to your background image */
+    background-size: cover; /* Ensures full coverage */
+    background-position: center;
+    background-attachment: fixed; /* Keeps background static */
+    background-repeat: no-repeat;
+    font-family: 'Orbitron', sans-serif; /* Modern & futuristic font */
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Center the container */
+.container {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    padding-top: 50px;
+}
+
+/* Title Styling */
+h1, h2, h3, h4 {
+    font-size: 36px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Yellow Card-style Box */
+.box, .card {
+    background: gold !important; /* Yellow background */
+    color: black !important; /* Dark text for contrast */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 223, 0, 0.8); /* Slight yellow glow */
+    width: 80%;
+    margin: auto;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px); /* Slight glassmorphism effect */
+}
+
+/* Buttons */
+button {
+    width: 80%;
+    padding: 12px;
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+}
+
+/* Blue Button */
+.blue-btn {
+    background-color: royalblue;
+    color: white;
+}
+
+/* Yellow Button */
+.yellow-btn {
+    background-color: gold;
+    color: black;
+}
+
+/* Purple Button */
+.btn-purple {
+    background-color: #800080 !important; /* Deep Purple */
+    color: white !important;
+}
+
+.btn-purple:hover {
+    background-color: #9400D3 !important; /* Darker Purple */
+    color: #fff !important;
+}
+
+/* Input Fields */
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 18px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Proceed Button */
+.proceed-btn {
+    background-color: deepskyblue;
+    color: white;
+}
+
+/* Smooth Fade-in Animation */
+.fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

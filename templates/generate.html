@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Synthetic Data</title>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); }
+            100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h2 {
+            color: #00c6ff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #ddd;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            transition: 0.3s ease-in-out;
+        }
+
+        input[type="number"]:focus {
+            border-color: #00c6ff;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+            animation: glow 1.5s infinite alternate;
+        }
+
+        button {
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            font-weight: bold;
+            transition: 0.3s;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #0072ff, #00c6ff);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Generate Synthetic Data</h2>
+        <p>Enter the number of rows you want to generate:</p>
+        <form action="/generate" method="post" onsubmit="return validateInput()">
+            <label for="num_rows">Number of Rows:</label>
+            <input type="number" id="num_rows" name="num_rows" required min="1">
+            <button type="submit">Generate & Download</button>
+        </form>
+    </div>
+
+    <script>
+        function validateInput() {
+            let numRows = document.getElementById("num_rows").value.trim();
+
+            if (numRows === "" || numRows < 1) {
+                alert("Please enter a valid number of rows (minimum 1).");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

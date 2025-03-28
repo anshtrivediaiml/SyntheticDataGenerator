@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Data Entry</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .btn {
+            transition: 0.3s ease-in-out;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        table {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-in-out;
+        }
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            let numRows = urlParams.get('num_rows') || '';
+            let numColumns = urlParams.get('num_columns') || '';
+            let columnNames = urlParams.get('column_names') ? urlParams.get('column_names').split(',') : [];
+
+            if (numRows && numColumns) {
+                generateTable(numRows, numColumns, columnNames);
+            }
+        });
+
+        function generateTable(rows, cols, columnNames = []) {
+            let tableDiv = document.getElementById('tableDiv');
+            let tableHTML = `<table class="table table-dark table-bordered mt-3"><thead><tr>`;
+
+            for (let j = 0; j < cols; j++) {
+                let colName = columnNames[j] || `Column ${j + 1}`;
+                tableHTML += `<th><input type="text" name="column_names" class="form-control column-name" value="${colName}" required></th>`;
+            }
+            tableHTML += `</tr></thead><tbody>`;
+
+            for (let i = 0; i < rows; i++) {
+                tableHTML += `<tr>`;
+                for (let j = 0; j < cols; j++) {
+                    tableHTML += `<td><input type="text" name="row_${i}_${j}" class="form-control" required></td>`;
+                }
+                tableHTML += `</tr>`;
+            }
+            tableHTML += `</tbody></table>`;
+
+            tableDiv.innerHTML = tableHTML;
+            tableDiv.querySelector('table').classList.add('fade-in');
+
+            document.getElementById('hiddenColumns').value = cols;
+            document.getElementById('submitBtn').style.display = 'block';
+
+            // Smooth scroll to table
+            setTimeout(() => tableDiv.scrollIntoView({ behavior: "smooth" }), 300);
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Enter Data Manually</h2>
+        
+        <form method="POST" action="{{ url_for('submit_manual_data') }}">
+            <div class="mb-3">
+                <label for="num_rows" class="form-label">Number of Rows:</label>
+                <input type="number" id="num_rows" name="num_rows" class="form-control" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label for="num_columns" class="form-label">Number of Columns:</label>
+                <input type="number" id="num_columns" name="num_columns" class="form-control" min="1" required>
+            </div>
+            
+            <input type="hidden" id="hiddenColumns" name="hiddenColumns">
+            <div id="tableDiv" class="mt-3"></div>
+            
+            <button type="submit" id="submitBtn" class="btn btn-success mt-3 w-100" style="display:none;">Submit Data</button>
+        </form>
+    </div>
+</body>
+</html>

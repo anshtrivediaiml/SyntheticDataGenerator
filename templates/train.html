@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Model</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .spinner-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .spinner-border {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        input[type="text"] {
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #ff758c, #ff7eb3);
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #ff7eb3, #ff758c);
+            box-shadow: 0 0 15px rgba(255, 117, 140, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Train Synthetic Data Model</h2>
+        
+        {% if manual_entry %}
+        <div class="glass-card">
+            <h4 class="text-center">Enter Data Manually</h4>
+            <form action="/process_manual_data" method="post">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                            <tr>
+                                {% for column in column_names %}
+                                <th>{{ column }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in range(num_rows) %}
+                            <tr>
+                                {% for column in column_names %}
+                                <td>
+                                    <input type="text" name="column_{{ column }}[]" class="form-control" required>
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Submit & Train</button>
+            </form>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let firstInput = document.querySelector("input[type='text']");
+                if (firstInput) firstInput.focus();
+            });
+        </script>
+
+        {% else %}
+        <div class="glass-card text-center">
+            <h4>Training CTGAN Model...</h4>
+            <p>This may take a few minutes. Please wait.</p>
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
